@@ -1,0 +1,1 @@
+call java -jar .\hw_1_base_operations\target\base_operations.jar
