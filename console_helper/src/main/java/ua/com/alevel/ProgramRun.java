@@ -16,7 +16,7 @@ public class ProgramRun {
             while ((event = bufferedReader.readLine()) != null) {
 
                 for (int i = 0; i < taskHelpers.size(); i++) {
-                    if (Integer.parseInt(event)> taskHelpers.size()) System.exit(0);
+                    if (Integer.parseInt(event) > taskHelpers.size()) System.exit(0);
                     if (Integer.parseInt(event) == i) {
                         taskHelpers.get(i).run(bufferedReader);
                     }
@@ -33,8 +33,10 @@ public class ProgramRun {
     }
 
     public static void preview() {
-        System.out.println("if you need first task, please select 0");
-        System.out.println("if you need second task, please select 1");
+        System.out.println("if you need to reverse all string, please select 0");
+        System.out.println("if you need to reverse by indexes, please select 1");
+        System.out.println("if you need to reverse by substring, please select 2");
+        System.out.println("if you need to reverse by word, please select 3");
         System.out.println("select any other number for exit");
         System.out.println();
 
