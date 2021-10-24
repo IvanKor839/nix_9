@@ -32,7 +32,7 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass>ua.com.alevel.main</mainClass>
+                  <mainClass>ua.com.alevel.Main</mainClass>
                 </transformer>
               </transformers>
             </configuration>
