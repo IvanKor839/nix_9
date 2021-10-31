@@ -1,1 +1,0 @@
-call java -jar .\hw_3_start_oop\target\start_oop.jar

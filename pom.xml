@@ -16,6 +16,7 @@
         <module>string_helper</module>
         <module>module_1</module>
         <module>hw_3_start_oop</module>
+        <module>module_1</module>
     </modules>
 
     <properties>
