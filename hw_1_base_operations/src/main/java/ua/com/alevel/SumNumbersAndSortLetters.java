@@ -26,15 +26,11 @@ public class SumNumbersAndSortLetters implements TaskHelper {
             } else {
                 treeMap.put(chars[i], 1);
             }
-
         }
-
         toString(treeMap);
         System.out.println("Sum= " + sum);
-
         ProgramRun.preview();
     }
-
 
     public void toString(TreeMap<Character, Integer> treeMap) {
         int i = 1;

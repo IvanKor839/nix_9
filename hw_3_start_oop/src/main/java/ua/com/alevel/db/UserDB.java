@@ -30,7 +30,6 @@ public final class UserDB {
         users[users.length-1] = user;
     }
 
-
     public void create(User user) {
         user.setId(generateId());
         add(user);
