@@ -1,2 +1,2 @@
-call .\module_1\clean_install.bat
-call .\module_1\run.bat
+call .\clean_install.bat
+call .\run.bat
