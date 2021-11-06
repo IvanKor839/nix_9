@@ -9,7 +9,7 @@
   <artifactId>module_1</artifactId>
   <version>1.0-SNAPSHOT</version>
   <build>
-    <finalName>module_1</finalName>
+    <finalName>module</finalName>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>

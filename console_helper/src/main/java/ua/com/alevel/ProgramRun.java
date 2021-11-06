@@ -7,7 +7,6 @@ import java.io.BufferedReader;
 
 public class ProgramRun {
 
-
     public static void run(List<TaskHelper> taskHelpers) throws IOException {
         preview();
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
@@ -20,7 +19,6 @@ public class ProgramRun {
                     if (Integer.parseInt(event) == i) {
                         taskHelpers.get(i).run(bufferedReader);
                     }
-
                 }
 
             }
@@ -29,7 +27,6 @@ public class ProgramRun {
             e.printStackTrace();
 
         }
-
     }
 
     public static void preview() {
@@ -43,6 +40,4 @@ public class ProgramRun {
         System.out.println();
 
     }
-
-
 }

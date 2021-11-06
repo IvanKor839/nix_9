@@ -56,5 +56,4 @@ public class Chess implements TaskHelper {
         }
         System.out.println();
     }
-
 }
