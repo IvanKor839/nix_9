@@ -1,1 +1,1 @@
-call java -jar .\target\module.jar
+call java -jar .\target\module_1.jar
