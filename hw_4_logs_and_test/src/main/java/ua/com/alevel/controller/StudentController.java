@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class StudentController {
-
     StudentService studentService = new StudentService();
     GroupService groupService = new GroupService();
     GroupController groupController = new GroupController();

@@ -1,6 +1,5 @@
 package ua.com.alevel.db;
 
-import ua.com.alevel.entity.Group;
 import ua.com.alevel.entity.Student;
 
 import java.util.Arrays;
@@ -42,16 +41,16 @@ public class StudentDB {
 
     public void delete(String id) {
         Student studentDelete = findById(id);
-        int studentLength = students.length;
         for (int i = 0; i < students.length; i++) {
-            if (students[i] != null && students[i].getId().equals(String.valueOf(studentDelete.getId())))
+            if (students[i] != null && students[i].getId().equals(String.valueOf(studentDelete.getId()))) {
                 students[i] = null;
-            index = i;
+                index = i;
+            }
         }
         for (int i = index; i < students.length - 1; i++) {
             students[i] = students[i + 1];
         }
-        students[studentLength - 1] = null;
+        students = Arrays.copyOf(students, students.length - 1);
     }
 
     public Student findById(String id) {

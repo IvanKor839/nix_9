@@ -134,12 +134,10 @@ public class GroupController {
         System.out.println("Please, enter id group witch do you wand to delete");
         String id = notNullGroupById(reader);
         Student[] students = studentService.findAllStudentInGroup(id);
-        System.out.println(students.length);
         for (int i = 0; i < students.length; i++) {
             if (students[i] != null) {
                 studentService.delete(students[i].getId());
             }
-
         }
         System.out.println("Group was deleted successfully");
         groupService.delete(id);

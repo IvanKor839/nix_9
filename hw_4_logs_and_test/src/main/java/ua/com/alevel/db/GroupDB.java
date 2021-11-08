@@ -41,17 +41,17 @@ public class GroupDB {
 
     public void delete(String id) {
         Group userDelete = findById(id);
-        int groupLength = groups.length;
         for (int i = 0; i < groups.length; i++) {
-            if (groups[i].getId().equals(userDelete.getId())) groups[i] = null;
-            index = i;
+            if (groups[i]!=null && groups[i].getId().equals(userDelete.getId())) {
+                groups[i] = null;
+                index = i;
+            }
         }
         for (int i = index; i < groups.length - 1; i++) {
             groups[i] = groups[i + 1];
         }
-        groups[groupLength - 1] = null;
+        groups = Arrays.copyOf(groups, groups.length -1);
     }
-
 
     public Group findById(String id) {
         for (int i = 0; i < groups.length; i++) {
