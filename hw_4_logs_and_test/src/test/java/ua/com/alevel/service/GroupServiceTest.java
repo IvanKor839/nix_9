@@ -63,6 +63,7 @@ public class GroupServiceTest {
     private String getRandomIdFromGroupArray() {
         return Arrays.stream(groupService.findAll()).findFirst().get().getId();
     }
+
     private Group getGroupFromGroupArray(String id) {
         return groupService.findById(id);
     }
