@@ -30,14 +30,9 @@ public class ProgramRun {
     }
 
     public static void preview() {
-        System.out.println("if you need UniqueSymbol, please select 0");
-        System.out.println("if you need Chess, please select 1");
-        System.out.println("if you need TriangleSquare, please select 2");
-        System.out.println("if you need CorrectString, please select 3");
-        System.out.println("if you need BinaryTree, please select 4");
-        System.out.println("if you need GameOfLife, please select 5");
+        System.out.println("if you need StudentController, please select 0");
+        System.out.println("if you need GroupController, please select 1");
         System.out.println("select any other number for exit");
         System.out.println();
-
     }
 }
