@@ -12,7 +12,7 @@ public class MainMenu {
     public static void run() {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("----------------");
-        System.out.println("All MathSets will be saved and you can use them for testing methods");
+        System.out.println("All Date will be saved and you can use them for testing methods");
         System.out.println("Select type of operation:");
         String position;
         try {
