@@ -11,14 +11,14 @@ import java.util.List;
 
 public class SecondModuleMain {
 
-    private static final String CATALOG = "./module_2/src/main/resources/inputdata/";
+    private static final String CATALOG = "./src/main/resources/inputdata/";
 
     public static void main(String[] args) throws IOException {
 
         List<TaskHelper> list = new ArrayList<>();
         list.add(new ParseDateController(CATALOG + "date.txt"));
         list.add(new UniqueStringController(CATALOG + "uniquestring.txt"));
-        list.add(new ProfitableWayController(CATALOG+ "profitablewayinput.txt",CATALOG+ "profitablewayoutput.txt"));
+        list.add(new ProfitableWayController(CATALOG + "profitablewayinput.txt", CATALOG + "profitablewayoutput.txt"));
         ProgramRun.run(list);
     }
 }

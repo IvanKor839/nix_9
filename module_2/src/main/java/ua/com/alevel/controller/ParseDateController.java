@@ -19,7 +19,7 @@ public class ParseDateController implements TaskHelper {
     }
 
     @Override
-    public void run() throws IOException {
+    public void run() {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(path));
             List<String> lines = new ArrayList<>();
@@ -29,8 +29,8 @@ public class ParseDateController implements TaskHelper {
             ParseDate parse = new ParseDate();
             parse.parseDate(lines);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("problem:" + e.getMessage());
         }
-
+        ProgramRun.preview();
     }
 }
