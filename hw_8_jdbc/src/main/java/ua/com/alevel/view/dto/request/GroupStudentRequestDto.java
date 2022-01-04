@@ -1,11 +1,13 @@
-package ua.com.alevel.dto.groupstudent;
+package ua.com.alevel.view.dto.request;
 
-import ua.com.alevel.dto.RequestDto;
+import ua.com.alevel.view.dto.RequestDto;
 
 public class GroupStudentRequestDto extends RequestDto {
 
     private Long groupId;
     private Long studentId;
+
+    public GroupStudentRequestDto(){}
 
     public GroupStudentRequestDto(Long groupId, Long studentId) {
         this.groupId = groupId;

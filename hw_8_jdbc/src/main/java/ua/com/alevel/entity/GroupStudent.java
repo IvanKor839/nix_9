@@ -2,32 +2,31 @@ package ua.com.alevel.entity;
 
 public class GroupStudent extends BaseEntity{
 
-    private Long groupId;
-    private Long studentId;
+    private Group group;
+    private Student student;
 
-    public Long getGroupId() {
-        return groupId;
+    public Group getGroup() {
+        return group;
     }
 
-    public void setGroupId(Long groupId) {
-        this.groupId = groupId;
+    public void setGroup(Group group) {
+        this.group = group;
     }
 
-    public Long getStudentId() {
-        return studentId;
+    public Student getStudent() {
+        return student;
     }
 
-    public void setStudentId(Long studentId) {
-        this.studentId = studentId;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
     @Override
     public String toString() {
         return "GroupStudent{" +
                 "id=" + id +
-                ", groupId=" + groupId +
-                ", studentId=" + studentId +
+                ", group=" + group +
+                ", student=" + student +
                 '}';
     }
-
 }

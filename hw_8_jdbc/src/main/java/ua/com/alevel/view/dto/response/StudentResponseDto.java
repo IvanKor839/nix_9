@@ -1,6 +1,6 @@
-package ua.com.alevel.dto.student;
+package ua.com.alevel.view.dto.response;
 
-import ua.com.alevel.dto.ResponseDto;
+import ua.com.alevel.view.dto.ResponseDto;
 import ua.com.alevel.entity.Student;
 
 public class StudentResponseDto extends ResponseDto {
@@ -8,8 +8,6 @@ public class StudentResponseDto extends ResponseDto {
     private String firstName;
     private String lastName;
     private Integer age;
-
-    public StudentResponseDto() { }
 
     public StudentResponseDto(Student student){
         this.firstName = student.getFirstName();

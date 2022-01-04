@@ -5,7 +5,7 @@
       layout:decorate="~{layout}">
 <head>
     <meta charset="utf-8">
-    <title>New Employee</title>
+    <title>New Group</title>
 </head>
 <body>
 
@@ -15,23 +15,23 @@
         <div class="col-12">
             <div class="card mt-2">
                 <div class="card-header">
-                    <h4>New Employee</h4>
+                    <h4>New Student</h4>
                 </div>
                 <div class="card-body">
-                    <form action="#" th:action="@{/employees/new}" th:object="${employee}" method="post">
-                        <input type="hidden" th:field="*{departmentId}" th:value="${departmentId}" th:attr="name='departmentId'">
+                    <form action="#" th:action="@{/students/new}" th:object="${student}" method="post">
                         <div class="form-group">
-                            <label for="firstName">first name</label>
+                            <label for="firstName"> First name</label>
                             <input type="text" class="form-control" id="firstName" aria-describedby="firstName" placeholder="Enter first name" th:field="*{firstName}">
                         </div>
                         <div class="form-group">
-                            <label for="lastName">last name</label>
+                            <label for="lastName"> Last name</label>
                             <input type="text" class="form-control" id="lastName" aria-describedby="lastName" placeholder="Enter last name" th:field="*{lastName}">
                         </div>
                         <div class="form-group">
-                            <label for="age">age</label>
+                            <label for="age">Age</label>
                             <input type="text" class="form-control" id="age" aria-describedby="age" placeholder="Enter age" th:field="*{age}">
                         </div>
+
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div>

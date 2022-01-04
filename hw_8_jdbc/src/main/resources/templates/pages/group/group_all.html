@@ -2,57 +2,32 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}">
+      layout:decorate="~{fragments/data_table}">
 <head>
     <meta charset="utf-8">
-    <title>Departments</title>
+    <title>groups</title>
 </head>
 <body>
 
-<div layout:fragment="content">
+<div layout:fragment="data_table_content">
+    <tr th:each="group,iter : ${pageData.getItems()}">
+        <td th:text="${iter.count}"></td>
+        <td th:text="${group.getCreated()}"></td>
+        <td th:text="${group.getUpdated()}"></td>
+        <td th:text="${group.getName()}"></td>
+        <td th:text="${group.getNameMentor()}"></td>
+        <td th:text="${group.getGroupType()}"></td>
 
-    <div class="row">
-        <div class="col-12">
-            <div class="card mb-2 mt-2">
-                <div class="card-header">
-                    All Departments
-                </div>
-                <div class="card-body">
-                    <table class="table table-sm table-hover">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>created</th>
-                            <th>updated</th>
-                            <th>type</th>
-                            <th>name</th>
-                            <th>name mentor</th>
-                            <th>details</th>
-                            <th>delete</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="group,iter : ${groups}">
-                            <td th:text="${iter.count}"></td>
-                            <td th:text="${#calendars.format(group.getCreated(),'dd MMMM yyyy')}"></td>
-                            <td th:text="${#calendars.format(group.getUpdated(),'dd MMMM yyyy')}"></td>
-                            <td th:text="${group.getName()}"></td>
-                            <td th:text="${group.getGroupType().name()}"></td>
+        <td><a th:href="@{'/students/all/group/' + ${group.getId()}}"  th:text="${group.getStudentCount()}" ></a></td>
 
-                            <td>
-                                <a th:href="@{'/groups/details/' + ${group.getId()}}" type="button" class="btn btn-primary">details</a>
-                            </td>
-                            <td>
-                                <a th:href="@{'/groups/delete/' + ${group.getId()}}" type="button" class="btn btn-danger">delete</a>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-
+        <td>
+            <a th:href="@{'/groups/details/' + ${group.getId()}}" type="button"
+               class="btn btn-primary">details</a>
+        </td>
+        <td>
+            <a th:href="@{'/groups/delete/' + ${group.getId()}}" type="button" class="btn btn-danger">delete</a>
+        </td>
+    </tr>
 </div>
 
 </body>

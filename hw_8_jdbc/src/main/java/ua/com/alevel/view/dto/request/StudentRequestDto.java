@@ -1,6 +1,6 @@
-package ua.com.alevel.dto.student;
+package ua.com.alevel.view.dto.request;
 
-import ua.com.alevel.dto.RequestDto;
+import ua.com.alevel.view.dto.RequestDto;
 
 public class StudentRequestDto extends RequestDto {
 

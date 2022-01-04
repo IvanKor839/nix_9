@@ -3,6 +3,8 @@ package ua.com.alevel.dao.impl;
 import org.springframework.stereotype.Service;
 import ua.com.alevel.config.jpa.JpaConfig;
 import ua.com.alevel.dao.GroupDao;
+import ua.com.alevel.datatable.DataTableRequest;
+import ua.com.alevel.datatable.DataTableResponse;
 import ua.com.alevel.entity.Group;
 import ua.com.alevel.type.GroupType;
 
@@ -11,9 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class GroupDaoImpl implements GroupDao {
@@ -76,8 +76,8 @@ public class GroupDaoImpl implements GroupDao {
 
     @Override
     public Group findById(Long id) {
-        try(ResultSet resultSet = jpaConfig.getStatement().executeQuery("SELECT * FROM groups WHERE id = "+id)) {
-            while(resultSet.next()){
+        try (ResultSet resultSet = jpaConfig.getStatement().executeQuery("SELECT * FROM groups WHERE id = " + id)) {
+            while (resultSet.next()) {
                 return initGroupByResultSet(resultSet);
             }
         } catch (SQLException e) {
@@ -87,16 +87,56 @@ public class GroupDaoImpl implements GroupDao {
     }
 
     @Override
-    public List<Group> findAll() throws IOException {
-        List<Group> groups = new ArrayList<>();
-        try(ResultSet resultSet = jpaConfig.getStatement().executeQuery("SELECT * FROM 'groups'")) {
-            while (resultSet.next()){
-                groups.add(initGroupByResultSet(resultSet));
+    public long count() {
+        int count = 0;
+        try (ResultSet resultSet = jpaConfig.getStatement().executeQuery("SELECT COUNT(*) as count FROM groups")) {
+            while (resultSet.next()) {
+                count = resultSet.getInt("count");
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    @Override
+    public DataTableResponse<Group> findAll(DataTableRequest request) throws IOException {
+        List<Group> groups = new ArrayList<>();
+        Map<Object, Object> otherParamMap = new HashMap<>();
+        int limit = (request.getCurrentPage() - 1) * request.getPageSize();
+        String sql = "select `groups`.id, `groups`.created, `groups`.updated, `groups`.group_type, `groups`.name, `groups`.name_mentor, count(id_student) as student_count "+
+        " from groups left outer join groups_students as gs on `groups`.id = gs.id_group group by  `groups`.id order by "+
+                request.getSort() + " " +
+                request.getOrder() + " limit " +
+                limit + "," +
+                request.getPageSize();
+
+        try (ResultSet resultSet = jpaConfig.getStatement().executeQuery(sql)) {
+            while (resultSet.next()) {
+                GroupResultSet groupResultSet = convertToGroupResultSet(resultSet);
+                groups.add(groupResultSet.getGroup());
+                otherParamMap.put(groupResultSet.getGroup().getId() , groupResultSet.getStudentCount());
+            }
+        } catch (SQLException e) {
             System.out.println("problem: = " + e.getMessage());
         }
-        return groups;
+        DataTableResponse<Group> dataTableResponse = new DataTableResponse<>();
+        dataTableResponse.setItems(groups);
+        dataTableResponse.setOtherParamMap(otherParamMap);
+        return dataTableResponse;
+    }
+
+    @Override
+    public List<Group> findAll() {
+        List<Group> groupList = new ArrayList<>();
+        try (ResultSet resultSet = jpaConfig.getStatement().executeQuery("SELECT * FROM groups")) {
+            while (resultSet.next()) {
+                groupList.add(initGroupByResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return groupList;
     }
 
     private Group initGroupByResultSet(ResultSet resultSet) throws SQLException {
@@ -106,6 +146,7 @@ public class GroupDaoImpl implements GroupDao {
         String type = resultSet.getString("group_type");
         Timestamp created = resultSet.getTimestamp("created");
         Timestamp updated = resultSet.getTimestamp("updated");
+
         Group group = new Group();
         group.setId(id);
         group.setName(name);
@@ -114,5 +155,60 @@ public class GroupDaoImpl implements GroupDao {
         group.setCreated(new Date(created.getTime()));
         group.setUpdated(new Date(updated.getTime()));
         return group;
+    }
+    private GroupResultSet convertToGroupResultSet(ResultSet resultSet) throws SQLException {
+        Group group = initGroupByResultSet(resultSet);
+        long studentCount = resultSet.getInt("student_count");
+        return new GroupResultSet(group , studentCount);
+    }
+
+    @Override
+    public DataTableResponse<Group> findByStudentId(DataTableRequest request, Long id) {
+        List<Group> groupList = new ArrayList<>();
+        Map<Object, Object> otherParamMap = new HashMap<>();
+        int limit = (request.getCurrentPage() - 1) * request.getPageSize();
+        String sql = "select groups.id, groups.created, groups.updated, name, name_mentor, group_type, count(id_student) as student_count "+
+                "from `groups` left outer join groups_students as gs on `groups`.id = gs.id_group where `groups`.id in (select id_group from groups_students where id_student= "+id+")"+
+                "group by `groups`.id order by "+
+                request.getSort() + " " +
+                request.getOrder() + " limit " +
+                limit + "," +
+                request.getPageSize();
+        try (ResultSet resultSet = jpaConfig.getStatement().executeQuery(sql)) {
+            while (resultSet.next()) {
+                GroupResultSet groupResultSet = convertToGroupResultSet(resultSet);
+                groupList.add(groupResultSet.getGroup());
+                otherParamMap.put(groupResultSet.getGroup().getId(), groupResultSet.getStudentCount());
+            }
+        } catch (SQLException e) {
+            System.out.println("problem: = " + e.getMessage());
+        }
+        DataTableResponse<Group> dataTableResponse = new DataTableResponse<>();
+        dataTableResponse.setItems(groupList);
+        dataTableResponse.setOtherParamMap(otherParamMap);
+        return dataTableResponse;
+    }
+   public int countByStudentId(Long studentId){
+       int count = 0;
+       String sql = "select count(*) as count from groups_students where id_student =";
+       try (ResultSet resultSet = jpaConfig.getStatement().executeQuery(sql+studentId)) {
+           while (resultSet.next()) {
+               count = resultSet.getInt("count");
+           }
+       } catch (SQLException e) {
+           e.printStackTrace();
+       }
+       return count;
+   }
+
+    private record GroupResultSet(Group group, long studentCount) {
+
+        public Group getGroup() {
+            return group;
+        }
+
+        public long getStudentCount() {
+            return studentCount;
+        }
     }
 }

@@ -1,6 +1,6 @@
-package ua.com.alevel.dto.group;
+package ua.com.alevel.view.dto.response;
 
-import ua.com.alevel.dto.ResponseDto;
+import ua.com.alevel.view.dto.ResponseDto;
 import ua.com.alevel.entity.Group;
 import ua.com.alevel.type.GroupType;
 
@@ -9,8 +9,14 @@ public class GroupResponseDto extends ResponseDto {
     private String name;
     private GroupType groupType;
     private String nameMentor;
+    private Long studentCount;
 
-    public GroupResponseDto() {
+    public Long getStudentCount() {
+        return studentCount;
+    }
+
+    public void setStudentCount(Long studentCount) {
+        this.studentCount = studentCount;
     }
 
     public GroupResponseDto(Group group) {

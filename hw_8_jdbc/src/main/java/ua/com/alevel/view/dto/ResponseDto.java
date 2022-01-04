@@ -1,4 +1,4 @@
-package ua.com.alevel.dto;
+package ua.com.alevel.view.dto;
 
 import java.util.Date;
 

@@ -1,5 +1,7 @@
 package ua.com.alevel.dao;
 
+import ua.com.alevel.datatable.DataTableRequest;
+import ua.com.alevel.datatable.DataTableResponse;
 import ua.com.alevel.entity.BaseEntity;
 
 import java.io.IOException;
@@ -13,5 +15,6 @@ public interface BaseDao<ENTITY extends BaseEntity>{
     void update(ENTITY entity) throws SQLException;
     boolean existById(Long id);
     ENTITY findById(Long id);
-    List<ENTITY> findAll() throws IOException;
+    DataTableResponse<ENTITY> findAll(DataTableRequest request) throws IOException;
+    long count();
 }

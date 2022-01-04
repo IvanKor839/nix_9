@@ -1,5 +1,7 @@
 package ua.com.alevel.service;
 
+import ua.com.alevel.datatable.DataTableRequest;
+import ua.com.alevel.datatable.DataTableResponse;
 import ua.com.alevel.entity.BaseEntity;
 
 import java.io.IOException;
@@ -12,5 +14,5 @@ public interface BaseService<ENTITY extends BaseEntity> {
     void delete(Long id);
     void update(ENTITY entity) throws SQLException;
     ENTITY findById(Long id);
-    List<ENTITY> findAll() throws IOException;
+    DataTableResponse<ENTITY> findAll(DataTableRequest request) throws IOException;
 }

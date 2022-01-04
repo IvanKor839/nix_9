@@ -15,46 +15,41 @@
         <div class="col-12">
             <div class="card mb-2 mt-2">
                 <div class="card-header">
-                    Details Employee
+                    Details Student
                 </div>
                 <div class="card-body">
                     <table class="table table-hover">
                         <tr>
                             <th>id</th>
-                            <td th:text="${employee.getId()}"></td>
-                        </tr>
-                        <tr>
-                            <th>first name</th>
-                            <td th:text="${employee.getFirstName()}"></td>
-                        </tr>
-                        <tr>
-                            <th>last name</th>
-                            <td th:text="${employee.getLastName()}"></td>
-                        </tr>
-                        <tr>
-                            <th>age</th>
-                            <td th:text="${employee.getAge()}"></td>
+                            <td th:text="${student.getId()}"></td>
                         </tr>
                         <tr>
                             <th>created</th>
-                            <td th:text="${#calendars.format(employee.getCreated(),'dd MMMM yyyy')}"></td>
+                            <td th:text="${#calendars.format(student.getCreated(),'dd MMMM yyyy')}"></td>
                         </tr>
                         <tr>
                             <th>updated</th>
-                            <td th:text="${#calendars.format(employee.getUpdated(),'dd MMMM yyyy')}"></td>
+                            <td th:text="${#calendars.format(student.getUpdated(),'dd MMMM yyyy')}"></td>
                         </tr>
                         <tr>
-                            <th>department id</th>
-                            <td>
-                                <a th:href="@{'/departments/details/' + ${employee.getDepartment().getId()}}" type="button" class="btn btn-link" th:text="${employee.getDepartment().getId()}">details</a>
-                            </td>
+                            <th>first name</th>
+                            <td th:text="${student.getFirstName()}"></td>
                         </tr>
                         <tr>
-                            <th>department type</th>
-                            <td th:text="${employee.getDepartment().getDepartmentType()}"></td>
+                            <th>last name</th>
+                            <td th:text="${student.getLastName()}"></td>
                         </tr>
+                        <tr>
+                            <th>age</th>
+                            <td th:text="${student.getAge()}"></td>
+                        </tr>
+
                     </table>
                     <hr>
+                    <div>
+                        <a th:href="@{'/groups/all/student/' + ${student.getId()}}" type="button"
+                           class="btn btn-primary">Show all groups</a>
+                    </div>
                 </div>
             </div>
         </div>

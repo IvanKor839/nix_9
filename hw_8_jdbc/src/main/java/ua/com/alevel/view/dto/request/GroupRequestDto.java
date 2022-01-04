@@ -1,6 +1,6 @@
-package ua.com.alevel.dto.group;
+package ua.com.alevel.view.dto.request;
 
-import ua.com.alevel.dto.RequestDto;
+import ua.com.alevel.view.dto.RequestDto;
 import ua.com.alevel.type.GroupType;
 
 public class GroupRequestDto extends RequestDto {

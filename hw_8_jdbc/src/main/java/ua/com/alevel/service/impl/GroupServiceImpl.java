@@ -3,8 +3,11 @@ package ua.com.alevel.service.impl;
 import org.springframework.stereotype.Service;
 import ua.com.alevel.dao.GroupDao;
 import ua.com.alevel.dao.GroupStudentDao;
+import ua.com.alevel.datatable.DataTableRequest;
+import ua.com.alevel.datatable.DataTableResponse;
 import ua.com.alevel.entity.Group;
 import ua.com.alevel.entity.GroupStudent;
+import ua.com.alevel.exception.EntityNotFoundException;
 import ua.com.alevel.service.GroupService;
 
 import java.io.IOException;
@@ -29,24 +32,45 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public void delete(Long id) {
-        if(groupDao.existById(id)){
-            groupStudentDao.deleteAllStudent(id);
-            groupDao.delete(id);
+        if(!groupDao.existById(id)){
+            throw new EntityNotFoundException("group not found");
         }
+        groupStudentDao.deleteAllStudent(id);
+        groupDao.delete(id);
     }
 
     @Override
     public void update(Group entity) throws SQLException {
+        if(!groupDao.existById(entity.getId())){
+            throw new EntityNotFoundException("group not found");
+        }
         groupDao.update(entity);
     }
 
     @Override
     public Group findById(Long id) {
+        if(!groupDao.existById(id)){
+            throw new EntityNotFoundException("group not found");
+        }
         return groupDao.findById(id);
     }
 
     @Override
-    public List<Group> findAll() throws IOException {
+    public DataTableResponse<Group> findAll(DataTableRequest request) throws IOException {
+        DataTableResponse<Group> dataTableResponse = groupDao.findAll(request);
+        dataTableResponse.setItemsSize(groupDao.count());
+        return dataTableResponse;
+    }
+
+    @Override
+    public List<Group> findAll() {
         return groupDao.findAll();
+    }
+
+    @Override
+    public DataTableResponse<Group> findByStudentId(DataTableRequest dataTableRequest, Long studentId) {
+        DataTableResponse<Group> dataTableResponse = groupDao.findByStudentId(dataTableRequest, studentId);
+        dataTableResponse.setItemsSize(groupDao.countByStudentId(studentId));
+        return dataTableResponse;
     }
 }
