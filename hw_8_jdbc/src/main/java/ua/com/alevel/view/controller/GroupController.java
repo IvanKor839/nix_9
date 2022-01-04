@@ -7,7 +7,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
-import ua.com.alevel.facade.GroupStudentFacade;
 import ua.com.alevel.view.dto.request.GroupRequestDto;
 import ua.com.alevel.view.dto.response.GroupResponseDto;
 import ua.com.alevel.facade.GroupFacade;
@@ -20,14 +19,12 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/groups")
-public class GroupController extends AbstractController{
+public class GroupController extends AbstractController {
 
     private final GroupFacade groupFacade;
-    private final GroupStudentFacade groupStudentFacade;
 
-    public GroupController(GroupFacade groupFacade, GroupStudentFacade groupStudentFacade) {
+    public GroupController(GroupFacade groupFacade) {
         this.groupFacade = groupFacade;
-        this.groupStudentFacade = groupStudentFacade;
     }
 
     @GetMapping
@@ -43,6 +40,7 @@ public class GroupController extends AbstractController{
         model.addAttribute("createNewItemUrl", "/groups/new");
         return "pages/group/group_all";
     }
+
     private HeaderName[] getColumnNames() {
         return new HeaderName[]{
                 new HeaderName("#", null, null),
@@ -51,11 +49,12 @@ public class GroupController extends AbstractController{
                 new HeaderName("name", "name", "name"),
                 new HeaderName("name Mentor", "nameMentor", "name_mentor"),
                 new HeaderName("group Type", "groupType", "group_type"),
-                new HeaderName("student count", "studentCount", "studentCount"),
+                new HeaderName("student count", "studentCount", "student_count"),
                 new HeaderName("details", null, null),
                 new HeaderName("delete", null, null)
         };
     }
+
     @PostMapping("/all")
     public ModelAndView findAllRedirect(WebRequest request, ModelMap model) {
         Map<String, String[]> parameterMap = request.getParameterMap();
@@ -104,6 +103,7 @@ public class GroupController extends AbstractController{
         model.addAttribute("cardHeader", "All Groups");
         return "pages/group/group_all";
     }
+
     @PostMapping("/all/student/{studentId}")
     public ModelAndView findAllByStudentRedirect(@PathVariable Long studentId, WebRequest request, ModelMap model) {
         Map<String, String[]> parameterMap = request.getParameterMap();

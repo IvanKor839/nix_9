@@ -104,8 +104,8 @@ public class GroupDaoImpl implements GroupDao {
         List<Group> groups = new ArrayList<>();
         Map<Object, Object> otherParamMap = new HashMap<>();
         int limit = (request.getCurrentPage() - 1) * request.getPageSize();
-        String sql = "select `groups`.id, `groups`.created, `groups`.updated, `groups`.group_type, `groups`.name, `groups`.name_mentor, count(id_student) as student_count "+
-        " from groups left outer join groups_students as gs on `groups`.id = gs.id_group group by  `groups`.id order by "+
+        String sql = "select `groups`.id, `groups`.created, `groups`.updated, `groups`.group_type, `groups`.name, `groups`.name_mentor, count(id_student) as student_count " +
+                " from groups left outer join groups_students as gs on `groups`.id = gs.id_group group by  `groups`.id order by " +
                 request.getSort() + " " +
                 request.getOrder() + " limit " +
                 limit + "," +
@@ -115,7 +115,7 @@ public class GroupDaoImpl implements GroupDao {
             while (resultSet.next()) {
                 GroupResultSet groupResultSet = convertToGroupResultSet(resultSet);
                 groups.add(groupResultSet.getGroup());
-                otherParamMap.put(groupResultSet.getGroup().getId() , groupResultSet.getStudentCount());
+                otherParamMap.put(groupResultSet.getGroup().getId(), groupResultSet.getStudentCount());
             }
         } catch (SQLException e) {
             System.out.println("problem: = " + e.getMessage());
@@ -156,10 +156,11 @@ public class GroupDaoImpl implements GroupDao {
         group.setUpdated(new Date(updated.getTime()));
         return group;
     }
+
     private GroupResultSet convertToGroupResultSet(ResultSet resultSet) throws SQLException {
         Group group = initGroupByResultSet(resultSet);
         long studentCount = resultSet.getInt("student_count");
-        return new GroupResultSet(group , studentCount);
+        return new GroupResultSet(group, studentCount);
     }
 
     @Override
@@ -167,9 +168,9 @@ public class GroupDaoImpl implements GroupDao {
         List<Group> groupList = new ArrayList<>();
         Map<Object, Object> otherParamMap = new HashMap<>();
         int limit = (request.getCurrentPage() - 1) * request.getPageSize();
-        String sql = "select groups.id, groups.created, groups.updated, name, name_mentor, group_type, count(id_student) as student_count "+
-                "from `groups` left outer join groups_students as gs on `groups`.id = gs.id_group where `groups`.id in (select id_group from groups_students where id_student= "+id+")"+
-                "group by `groups`.id order by "+
+        String sql = "select groups.id, groups.created, groups.updated, name, name_mentor, group_type, count(id_student) as student_count " +
+                "from `groups` left outer join groups_students as gs on `groups`.id = gs.id_group where `groups`.id in (select id_group from groups_students where id_student= " + id + ")" +
+                "group by `groups`.id order by " +
                 request.getSort() + " " +
                 request.getOrder() + " limit " +
                 limit + "," +
@@ -188,18 +189,19 @@ public class GroupDaoImpl implements GroupDao {
         dataTableResponse.setOtherParamMap(otherParamMap);
         return dataTableResponse;
     }
-   public int countByStudentId(Long studentId){
-       int count = 0;
-       String sql = "select count(*) as count from groups_students where id_student =";
-       try (ResultSet resultSet = jpaConfig.getStatement().executeQuery(sql+studentId)) {
-           while (resultSet.next()) {
-               count = resultSet.getInt("count");
-           }
-       } catch (SQLException e) {
-           e.printStackTrace();
-       }
-       return count;
-   }
+
+    public int countByStudentId(Long studentId) {
+        int count = 0;
+        String sql = "select count(*) as count from groups_students where id_student =";
+        try (ResultSet resultSet = jpaConfig.getStatement().executeQuery(sql + studentId)) {
+            while (resultSet.next()) {
+                count = resultSet.getInt("count");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
 
     private record GroupResultSet(Group group, long studentCount) {
 

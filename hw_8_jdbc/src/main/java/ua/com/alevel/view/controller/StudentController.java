@@ -21,7 +21,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/students")
-public class StudentController extends AbstractController{
+public class StudentController extends AbstractController {
 
     private final StudentFacade studentFacade;
     private final GroupFacade groupFacade;
@@ -32,13 +32,13 @@ public class StudentController extends AbstractController{
         this.groupFacade = groupFacade;
         this.groupStudentFacade = groupStudentFacade;
     }
+
     @GetMapping
     public String findAll(Model model, WebRequest request) throws IOException {
         HeaderName[] columnNames = getColumnNames();
         PageData<StudentResponseDto> response = studentFacade.findAll(request);
         response.initPaginationState(response.getCurrentPage());
-        List<HeaderData> headerDataList = getHeaderDataList(columnNames, response);
-        model.addAttribute("headerDataList", headerDataList);
+        model.addAttribute("headerDataList", getHeaderDataList(columnNames, response));
         model.addAttribute("createUrl", "/students/all");
         model.addAttribute("pageData", response);
         model.addAttribute("cardHeader", "All Students");
@@ -46,6 +46,7 @@ public class StudentController extends AbstractController{
         model.addAttribute("createNewItemUrl", "/students/new");
         return "pages/student/student_all";
     }
+
     private HeaderName[] getColumnNames() {
         return new HeaderName[]{
                 new HeaderName("#", null, null),
@@ -59,15 +60,25 @@ public class StudentController extends AbstractController{
         };
     }
 
+    @PostMapping("/all")
+    public ModelAndView findAllRedirect(WebRequest request, ModelMap model) {
+        Map<String, String[]> parameterMap = request.getParameterMap();
+        if (MapUtils.isNotEmpty(parameterMap)) {
+            parameterMap.forEach(model::addAttribute);
+        }
+        return new ModelAndView("redirect:/students", model);
+    }
+
     @GetMapping("/groups/{id}")
     public String findAll(Model model, WebRequest webRequest, @PathVariable Long id) throws IOException {
-         PageData<StudentResponseDto> students = studentFacade.findAll(webRequest);
+        PageData<StudentResponseDto> students = studentFacade.findAll(webRequest);
         model.addAttribute("students", students);
         return "pages/student/student_all";
     }
 
+
     @GetMapping("/new")
-    public String redirectToNewStudentPage( Model model) {
+    public String redirectToNewStudentPage(Model model) {
         model.addAttribute("student", new StudentRequestDto());
         return "pages/student/student_new";
     }
@@ -77,8 +88,9 @@ public class StudentController extends AbstractController{
         studentFacade.create(dto);
         return "redirect:/students";
     }
+
     @GetMapping("/new/{id}")
-    public String redirectToNewRecordPage( Model model) {
+    public String redirectToNewRecordPage(Model model) {
         model.addAttribute("groupStudent", new GroupStudentRequestDto());
         model.addAttribute("groups", groupFacade.findAll());
         model.addAttribute("students", studentFacade.findAll());
@@ -103,6 +115,7 @@ public class StudentController extends AbstractController{
         studentFacade.delete(id);
         return "redirect:/students";
     }
+
     @GetMapping("/all/group/{groupId}")
     public String findAllByGroup(@PathVariable Long groupId, Model model, WebRequest request) {
         HeaderName[] columnNames = getColumnNames();
@@ -117,6 +130,7 @@ public class StudentController extends AbstractController{
         model.addAttribute("cardHeader", "All Students");
         return "pages/student/student_all";
     }
+
     @PostMapping("/all/group/{groupId}")
     public ModelAndView findAllByCompanyRedirect(@PathVariable Long groupId, WebRequest request, ModelMap model) {
         Map<String, String[]> parameterMap = request.getParameterMap();

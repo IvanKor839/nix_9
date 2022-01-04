@@ -4,13 +4,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.WebRequest;
 import ua.com.alevel.datatable.DataTableRequest;
 import ua.com.alevel.datatable.DataTableResponse;
-import ua.com.alevel.entity.Group;
 import ua.com.alevel.utill.FacadeUtil;
 import ua.com.alevel.utill.WebRequestUtill;
 import ua.com.alevel.view.dto.request.PageAndSizeData;
 import ua.com.alevel.view.dto.request.SortData;
 import ua.com.alevel.view.dto.request.StudentRequestDto;
-import ua.com.alevel.view.dto.response.GroupResponseDto;
 import ua.com.alevel.view.dto.response.PageData;
 import ua.com.alevel.view.dto.response.StudentResponseDto;
 import ua.com.alevel.entity.Student;
@@ -71,8 +69,9 @@ public class StudentFacadeImpl implements StudentFacade {
         pageData.initPaginationState(pageData.getCurrentPage());
         return pageData;
     }
+
     @Override
-    public List<StudentResponseDto> findAll(){
+    public List<StudentResponseDto> findAll() {
         return studentService.findAll().stream().map(StudentResponseDto::new).toList();
     }
 

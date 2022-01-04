@@ -18,13 +18,15 @@ public class WebRequestUtill {
     public static final int DEFAULT_PAGE_PARAM_VALUE = 1;
     public static final int DEFAULT_SIZE_PARAM_VALUE = 10;
 
-    private WebRequestUtill(){ }
+    private WebRequestUtill() {
+    }
 
-    public static PageAndSizeData generatePageAndSizeData(WebRequest webRequest){
-        int page = webRequest.getParameter(PAGE_PARAM)!= null ? Integer.parseInt(Objects.requireNonNull(webRequest.getParameter(PAGE_PARAM))) : DEFAULT_PAGE_PARAM_VALUE;
+    public static PageAndSizeData generatePageAndSizeData(WebRequest webRequest) {
+        int page = webRequest.getParameter(PAGE_PARAM) != null ? Integer.parseInt(Objects.requireNonNull(webRequest.getParameter(PAGE_PARAM))) : DEFAULT_PAGE_PARAM_VALUE;
         int size = webRequest.getParameter(SIZE_PARAM) != null ? Integer.parseInt(Objects.requireNonNull(webRequest.getParameter(SIZE_PARAM))) : DEFAULT_SIZE_PARAM_VALUE;
         return new PageAndSizeData(page, size);
     }
+
     public static PageAndSizeData defaultPageAndSizeData() {
         return new PageAndSizeData(DEFAULT_PAGE_PARAM_VALUE, DEFAULT_SIZE_PARAM_VALUE);
     }

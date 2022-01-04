@@ -18,6 +18,7 @@ public class JdbcApplication {
     public static void main(String[] args) {
         SpringApplication.run(JdbcApplication.class, args);
     }
+
     @EventListener(ApplicationReadyEvent.class)
     public void initDB() {
         jpaConfig.connect();

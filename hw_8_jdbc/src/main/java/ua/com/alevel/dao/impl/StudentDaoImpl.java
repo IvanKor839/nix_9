@@ -5,9 +5,7 @@ import ua.com.alevel.config.jpa.JpaConfig;
 import ua.com.alevel.dao.StudentDao;
 import ua.com.alevel.datatable.DataTableRequest;
 import ua.com.alevel.datatable.DataTableResponse;
-import ua.com.alevel.entity.Group;
 import ua.com.alevel.entity.Student;
-import ua.com.alevel.type.GroupType;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;
@@ -27,7 +25,7 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     public void create(Student entity) {
-        try(PreparedStatement preparedStatement = jpaConfig.getConnection().prepareStatement("INSERT INTO students VALUES(default,?,?,?,?,?)" )) {
+        try (PreparedStatement preparedStatement = jpaConfig.getConnection().prepareStatement("INSERT INTO students VALUES(default,?,?,?,?,?)")) {
             preparedStatement.setTimestamp(1, new Timestamp(entity.getCreated().getTime()));
             preparedStatement.setTimestamp(2, new Timestamp(entity.getUpdated().getTime()));
             preparedStatement.setString(3, entity.getFirstName());
@@ -51,7 +49,7 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     public void update(Student entity) {
-        try(PreparedStatement preparedStatement = jpaConfig.getConnection().prepareStatement("UPDATE students SET  updated=?  first_name = ? last_name = ? age = ? where id = "+entity.getId())) {
+        try (PreparedStatement preparedStatement = jpaConfig.getConnection().prepareStatement("UPDATE students SET  updated=?  first_name = ? last_name = ? age = ? where id = " + entity.getId())) {
             preparedStatement.setTimestamp(1, new Timestamp(new Date().getTime()));
             preparedStatement.setString(2, entity.getFirstName());
             preparedStatement.setString(3, entity.getLastName());
@@ -78,8 +76,8 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     public Student findById(Long id) {
-        try(ResultSet resultSet = jpaConfig.getStatement().executeQuery("SELECT * FROM students WHERE id = "+id)) {
-            while(resultSet.next()){
+        try (ResultSet resultSet = jpaConfig.getStatement().executeQuery("SELECT * FROM students WHERE id = " + id)) {
+            while (resultSet.next()) {
                 return initStudentByResultSet(resultSet);
             }
         } catch (SQLException e) {
@@ -100,11 +98,12 @@ public class StudentDaoImpl implements StudentDao {
         }
         return count;
     }
+
     @Override
     public DataTableResponse<Student> findAll(DataTableRequest request) throws IOException {
         List<Student> students = new ArrayList<>();
         int limit = (request.getCurrentPage() - 1) * request.getPageSize();
-        String sql = "select * from students order by "+
+        String sql = "select * from students order by " +
                 request.getSort() + " " +
                 request.getOrder() + " limit " +
                 limit + "," +
@@ -121,6 +120,7 @@ public class StudentDaoImpl implements StudentDao {
         dataTableResponse.setItems(students);
         return dataTableResponse;
     }
+
     @Override
     public List<Student> findAll() {
         List<Student> students = new ArrayList<>();
@@ -155,8 +155,8 @@ public class StudentDaoImpl implements StudentDao {
     public DataTableResponse<Student> findByGroupId(DataTableRequest request, Long groupId) {
         List<Student> students = new ArrayList<>();
         int limit = (request.getCurrentPage() - 1) * request.getPageSize();
-        String sql = "select * from `students` where `students`.id in (select id_student from groups_students where id_group= "+groupId+")"+
-                "group by `students`.id order by "+
+        String sql = "select * from `students` where `students`.id in (select id_student from groups_students where id_group= " + groupId + ")" +
+                "group by `students`.id order by " +
                 request.getSort() + " " +
                 request.getOrder() + " limit " +
                 limit + "," +
@@ -177,7 +177,7 @@ public class StudentDaoImpl implements StudentDao {
     public int countByGroupId(Long groupId) {
         int count = 0;
         String sql = "select count(*) as count from groups_students where id_group =";
-        try (ResultSet resultSet = jpaConfig.getStatement().executeQuery(sql+groupId)) {
+        try (ResultSet resultSet = jpaConfig.getStatement().executeQuery(sql + groupId)) {
             while (resultSet.next()) {
                 count = resultSet.getInt("count");
             }
@@ -186,6 +186,7 @@ public class StudentDaoImpl implements StudentDao {
         }
         return count;
     }
+
     private Student getStudentFromResultSet(ResultSet resultSet) throws SQLException {
         Student student = new Student();
         student.setId(resultSet.getLong("id"));

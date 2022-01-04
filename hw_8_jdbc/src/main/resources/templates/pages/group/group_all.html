@@ -18,7 +18,7 @@
         <td th:text="${group.getNameMentor()}"></td>
         <td th:text="${group.getGroupType()}"></td>
 
-        <td><a th:href="@{'/students/all/group/' + ${group.getId()}}"  th:text="${group.getStudentCount()}" ></a></td>
+        <td><a th:href="@{'/students/all/group/' + ${group.getId()}}" th:text="${group.getStudentCount()}"></a></td>
 
         <td>
             <a th:href="@{'/groups/details/' + ${group.getId()}}" type="button"

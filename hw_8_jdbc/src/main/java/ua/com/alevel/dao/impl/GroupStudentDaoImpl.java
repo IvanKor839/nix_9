@@ -14,9 +14,7 @@ import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -41,20 +39,20 @@ public class GroupStudentDaoImpl implements GroupStudentDao {
 
     @Override
     public void delete(Long id) {
-        try (PreparedStatement preparedStatement = jpaConfig.getConnection().prepareStatement("DELETE FROM groups_students WHERE id = "+ id)){
+        try (PreparedStatement preparedStatement = jpaConfig.getConnection().prepareStatement("DELETE FROM groups_students WHERE id = " + id)) {
             preparedStatement.executeUpdate();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println("problem: = " + e.getMessage());
         }
     }
 
     @Override
     public void update(GroupStudent entity) throws SQLException {
-        try(PreparedStatement preparedStatement = jpaConfig.getConnection().prepareStatement("UPDATE groups_students SET id_group=? id_student=? WHERE id = "+entity.getId())) {
-            preparedStatement.setLong(1,entity.getGroup().getId());
-            preparedStatement.setLong(2,entity.getStudent().getId());
+        try (PreparedStatement preparedStatement = jpaConfig.getConnection().prepareStatement("UPDATE groups_students SET id_group=? id_student=? WHERE id = " + entity.getId())) {
+            preparedStatement.setLong(1, entity.getGroup().getId());
+            preparedStatement.setLong(2, entity.getStudent().getId());
             preparedStatement.executeUpdate();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println("problem: = " + e.getMessage());
         }
     }
@@ -75,9 +73,9 @@ public class GroupStudentDaoImpl implements GroupStudentDao {
 
     @Override
     public GroupStudent findById(Long id) {
-        try(ResultSet resultSet = jpaConfig.getStatement().executeQuery("select * from groups_students join `groups` g on " +
-                "groups_students.id_group = g.id JOIN students s on groups_students.id_student = s.id WHERE groups_students.id= "+id)) {
-            while(resultSet.next()){
+        try (ResultSet resultSet = jpaConfig.getStatement().executeQuery("select * from groups_students join `groups` g on " +
+                "groups_students.id_group = g.id JOIN students s on groups_students.id_student = s.id WHERE groups_students.id= " + id)) {
+            while (resultSet.next()) {
                 return initGroupStudentByResultSet(resultSet);
             }
         } catch (SQLException e) {
@@ -98,6 +96,7 @@ public class GroupStudentDaoImpl implements GroupStudentDao {
         }
         return count;
     }
+
     @Override
     public DataTableResponse<GroupStudent> findAll(DataTableRequest request) throws IOException {
         List<GroupStudent> groupStudent = new ArrayList<>();
@@ -110,7 +109,7 @@ public class GroupStudentDaoImpl implements GroupStudentDao {
                 request.getOrder() + " limit " +
                 limit + "," +
                 request.getPageSize();
-        try(ResultSet resultSet = jpaConfig.getStatement().executeQuery(sql)) {
+        try (ResultSet resultSet = jpaConfig.getStatement().executeQuery(sql)) {
             while (resultSet.next()) {
                 groupStudent.add(initGroupStudentByResultSet(resultSet));
             }
@@ -133,9 +132,9 @@ public class GroupStudentDaoImpl implements GroupStudentDao {
 
     @Override
     public void deleteAllGroup(Long studentId) {
-        try (PreparedStatement preparedStatement = jpaConfig.getConnection().prepareStatement("DELETE  FROM groups_students where id_student = " + studentId)){
+        try (PreparedStatement preparedStatement = jpaConfig.getConnection().prepareStatement("DELETE  FROM groups_students where id_student = " + studentId)) {
             preparedStatement.executeUpdate();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println("problem: = " + e.getMessage());
         }
     }

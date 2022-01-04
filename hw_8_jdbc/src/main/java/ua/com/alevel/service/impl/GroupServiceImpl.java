@@ -6,7 +6,6 @@ import ua.com.alevel.dao.GroupStudentDao;
 import ua.com.alevel.datatable.DataTableRequest;
 import ua.com.alevel.datatable.DataTableResponse;
 import ua.com.alevel.entity.Group;
-import ua.com.alevel.entity.GroupStudent;
 import ua.com.alevel.exception.EntityNotFoundException;
 import ua.com.alevel.service.GroupService;
 
@@ -32,7 +31,7 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public void delete(Long id) {
-        if(!groupDao.existById(id)){
+        if (!groupDao.existById(id)) {
             throw new EntityNotFoundException("group not found");
         }
         groupStudentDao.deleteAllStudent(id);
@@ -41,7 +40,7 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public void update(Group entity) throws SQLException {
-        if(!groupDao.existById(entity.getId())){
+        if (!groupDao.existById(entity.getId())) {
             throw new EntityNotFoundException("group not found");
         }
         groupDao.update(entity);
@@ -49,7 +48,7 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public Group findById(Long id) {
-        if(!groupDao.existById(id)){
+        if (!groupDao.existById(id)) {
             throw new EntityNotFoundException("group not found");
         }
         return groupDao.findById(id);

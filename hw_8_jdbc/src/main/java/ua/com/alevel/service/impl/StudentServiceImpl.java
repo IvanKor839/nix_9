@@ -5,7 +5,6 @@ import ua.com.alevel.dao.GroupStudentDao;
 import ua.com.alevel.dao.StudentDao;
 import ua.com.alevel.datatable.DataTableRequest;
 import ua.com.alevel.datatable.DataTableResponse;
-import ua.com.alevel.entity.Group;
 import ua.com.alevel.entity.Student;
 import ua.com.alevel.exception.EntityNotFoundException;
 import ua.com.alevel.service.StudentService;
@@ -32,8 +31,8 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void delete(Long id) {
-        if(!studentDao.existById(id)){
-           throw new EntityNotFoundException("student not found");
+        if (!studentDao.existById(id)) {
+            throw new EntityNotFoundException("student not found");
         }
         groupStudentDao.deleteAllGroup(id);
         studentDao.delete(id);
@@ -41,7 +40,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void update(Student entity) throws SQLException {
-        if(!studentDao.existById(entity.getId())){
+        if (!studentDao.existById(entity.getId())) {
             throw new EntityNotFoundException("student not found");
         }
         studentDao.update(entity);
@@ -61,6 +60,7 @@ public class StudentServiceImpl implements StudentService {
         dataTableResponse.setItemsSize(studentDao.count());
         return dataTableResponse;
     }
+
     @Override
     public List<Student> findAll() {
         return studentDao.findAll();

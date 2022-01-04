@@ -10,7 +10,6 @@ import ua.com.alevel.service.GroupStudentService;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 
 @Service
 public class GroupStudentServiceImpl implements GroupStudentService {
@@ -28,7 +27,7 @@ public class GroupStudentServiceImpl implements GroupStudentService {
 
     @Override
     public void delete(Long id) {
-        if(!groupStudentDao.existById(id)){
+        if (!groupStudentDao.existById(id)) {
             throw new EntityNotFoundException("record not found");
         }
         groupStudentDao.delete(id);
@@ -36,7 +35,7 @@ public class GroupStudentServiceImpl implements GroupStudentService {
 
     @Override
     public void update(GroupStudent entity) throws SQLException {
-        if(!groupStudentDao.existById(entity.getId())){
+        if (!groupStudentDao.existById(entity.getId())) {
             throw new EntityNotFoundException("record not found");
         }
         groupStudentDao.update(entity);
@@ -44,7 +43,7 @@ public class GroupStudentServiceImpl implements GroupStudentService {
 
     @Override
     public GroupStudent findById(Long id) {
-        if(!groupStudentDao.existById(id)){
+        if (!groupStudentDao.existById(id)) {
             throw new EntityNotFoundException("record not found");
         }
         return groupStudentDao.findById(id);

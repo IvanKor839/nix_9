@@ -69,8 +69,9 @@ public class GroupFacadeImpl implements GroupFacade {
         pageData.initPaginationState(pageData.getCurrentPage());
         return pageData;
     }
+
     @Override
-    public List<GroupResponseDto> findAll(){
+    public List<GroupResponseDto> findAll() {
         return groupService.findAll().stream().map(GroupResponseDto::new).toList();
     }
 

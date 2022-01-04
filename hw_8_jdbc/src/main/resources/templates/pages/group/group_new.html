@@ -21,11 +21,13 @@
                     <form action="#" th:action="@{/groups/new}" th:object="${group}" method="post">
                         <div class="form-group">
                             <label for="name">Group title</label>
-                            <input type="text" class="form-control" id="name" aria-describedby="name" placeholder="Enter name" th:field="*{name}">
+                            <input type="text" class="form-control" id="name" aria-describedby="name"
+                                   placeholder="Enter name" th:field="*{name}">
                         </div>
                         <div class="form-group">
                             <label for="name">Name mentor</label>
-                            <input type="text" class="form-control" id="nameMentor" aria-describedby="nameMentor" placeholder="Enter name mentor" th:field="*{nameMentor}">
+                            <input type="text" class="form-control" id="nameMentor" aria-describedby="nameMentor"
+                                   placeholder="Enter name mentor" th:field="*{nameMentor}">
                         </div>
                         <div class="form-group">
                             <label for="type">Group type</label>
