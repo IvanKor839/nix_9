@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="utf-8">
+    <title>Details Groups</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-2 mt-2">
+                <div class="card-header">
+                    Group Details
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <tr>
+                            <th>id</th>
+                            <td th:text="${group.getId()}"></td>
+                        </tr>
+                        <tr>
+                            <th>created</th>
+                            <td th:text="${#calendars.format(group.getCreated(),'dd MMMM yyyy')}"></td>
+                        </tr>
+                        <tr>
+                            <th>updated</th>
+                            <td th:text="${#calendars.format(group.getUpdated(),'dd MMMM yyyy')}"></td>
+                        </tr>
+                        <tr>
+                            <th>name</th>
+                            <td th:text="${group.getName()}"></td>
+                        </tr>
+                        <tr>
+                            <th>name_mentor</th>
+                            <td th:text="${group.getNameMentor()}"></td>
+                        </tr>
+                        <tr>
+                            <th>type</th>
+                            <td th:text="${group.getGroupType()}"></td>
+                        </tr>
+                    </table>
+                    <div class="card-header">
+                        All Student in Group
+                    </div>
+                    <table class="table table-sm table-hover">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Age</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="student,iter : ${students}">
+                            <td th:text="${iter.count}"></td>
+                            <td th:text="${student.getFirstName()}"></td>
+                            <td th:text="${student.getLastName()}"></td>
+                            <td th:text="${student.getAge()}"></td>
+                            <td>
+                                <a th:href="@{'/students/delete/group/' + ${student.getId()} + '/' + ${group.getId()}}"
+                                   type="button" class="btn btn-danger">delete</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <hr>
+                    <div>
+                        <a th:href="@{'/students/new/' + ${group.getId()}}" type="button" class="btn btn-primary">Add
+                        new student</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

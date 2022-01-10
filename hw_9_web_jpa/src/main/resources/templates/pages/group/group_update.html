@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="utf-8">
+    <title>Group Update</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card mt-2">
+                <div class="card-header">
+                    <h4>Group Update</h4>
+                </div>
+                <div class="card-body">
+                    <form action="#" th:action="@{'/groups/update/' + ${group.getId()}}" th:object="${group}"
+                          method="post">
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <input type="text" class="form-control" id="title" aria-describedby="title"
+                                   placeholder="Enter title" th:field="*{name}">
+                        </div>
+                        <div class="form-group">
+                            <label for="nameMentor">Name Mentor</label>
+                            <input type="text" class="form-control" id="nameMentor" aria-describedby="nameMentor"
+                                   placeholder="Enter name mentor" th:field="*{nameMentor}">
+                        </div>
+                        <div class="form-group">
+                            <label for="type">Group Type</label>
+                            <input type="text" class="form-control" id="type" aria-describedby="type"
+                                   placeholder="Enter group type" th:field="*{groupType}">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
