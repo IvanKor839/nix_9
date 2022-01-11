@@ -7,7 +7,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "students")
-public class Student extends BaseEntity{
+public class Student extends BaseEntity {
 
     @Column(name = "first_name")
     private String firstName;
@@ -17,7 +17,7 @@ public class Student extends BaseEntity{
 
     private Integer age;
 
-    @ManyToMany(mappedBy = "students", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "students", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 
     private Set<Group> groups;
 
@@ -68,6 +68,7 @@ public class Student extends BaseEntity{
                 ", age=" + age +
                 '}';
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
