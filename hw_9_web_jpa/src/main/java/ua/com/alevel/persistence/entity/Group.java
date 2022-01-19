@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "groups")
+@Table(name = "courses")
 public class Group extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
@@ -22,17 +22,17 @@ public class Group extends BaseEntity {
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
-            name = "groups_students",
-            joinColumns = @JoinColumn(name = "id_groups"),
+            name = "courses_students",
+            joinColumns = @JoinColumn(name = "id_course"),
             inverseJoinColumns = @JoinColumn(name = "id_student")
     )
-
     private Set<Student> students;
 
-    public Group(){
+    public Group() {
         super();
         students = new HashSet<>();
     }
+
     public Set<Student> getStudents() {
         return students;
     }
